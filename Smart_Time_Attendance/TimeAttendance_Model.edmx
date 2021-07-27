@@ -1,0 +1,582 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Time_Attendance_Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Employee_info">
+          <Key>
+            <PropertyRef Name="ID_EMP" />
+          </Key>
+          <Property Name="ID_EMP" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="FIRSTNAME_EMP" Type="nvarchar" MaxLength="50" />
+          <Property Name="LASTNAME_EMP" Type="nvarchar" MaxLength="50" />
+          <Property Name="DOB" Type="date" />
+          <Property Name="EMAIL" Type="nvarchar" MaxLength="50" />
+          <Property Name="MOBILE_PHONE" Type="nchar" MaxLength="15" />
+          <Property Name="POSITION" Type="nvarchar" MaxLength="50" />
+          <Property Name="SECTION" Type="nvarchar" MaxLength="50" />
+          <Property Name="EFFECTIVE_DATE" Type="date" />
+          <Property Name="TERMINATED_DATE" Type="date" />
+          <Property Name="ADDRESS_EMP" Type="nvarchar" MaxLength="50" />
+          <Property Name="path_image" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Holiday_emp">
+          <Key>
+            <PropertyRef Name="HOLIDAY_ID" />
+          </Key>
+          <Property Name="HOLIDAY_ID" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="ID_EMP" Type="nchar" MaxLength="10" />
+          <Property Name="FROMDATE" Type="datetime" />
+          <Property Name="TODATE" Type="datetime" />
+          <Property Name="MODE_HOLIDAY" Type="nvarchar" MaxLength="25" />
+          <Property Name="TYPE_HOLIDAY" Type="nvarchar" MaxLength="25" />
+          <Property Name="REQUEST_DATE" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Leave_employee">
+          <Key>
+            <PropertyRef Name="ID_EMP" />
+          </Key>
+          <Property Name="ID_EMP" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="TOTAL_VACATION" Type="float" />
+          <Property Name="BALANCE_VACATION" Type="float" />
+          <Property Name="TOTAL_SICK" Type="float" />
+          <Property Name="BALANCE_SICK" Type="float" />
+          <Property Name="TOTAL_PRIVATE_LEAVE" Type="float" />
+          <Property Name="BALANCE_PRIVATE_LEAVE" Type="float" />
+        </EntityType>
+        <EntityType Name="OT_EMP">
+          <Key>
+            <PropertyRef Name="OT_ID" />
+          </Key>
+          <Property Name="OT_ID" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="ID_EMP" Type="nchar" MaxLength="10" />
+          <Property Name="OT_TIME_FROM" Type="time" Precision="7" />
+          <Property Name="OT_TIME_TO" Type="time" Precision="7" />
+          <Property Name="DATE_OT" Type="date" />
+        </EntityType>
+        <EntityType Name="Timesheet_emp">
+          <Key>
+            <PropertyRef Name="LOGTIME_ID" />
+          </Key>
+          <Property Name="LOGTIME_ID" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="ID_EMP" Type="nchar" MaxLength="10" />
+          <Property Name="TIME_SCAN_IN" Type="time" Precision="7" />
+          <Property Name="TIME_SCAN_OUT" Type="time" Precision="7" />
+          <Property Name="DATE_SCAN" Type="date" />
+        </EntityType>
+        <EntityType Name="Transac_login">
+          <Key>
+            <PropertyRef Name="LOG_IN_ID" />
+          </Key>
+          <Property Name="LOG_IN_ID" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="ID_EMP" Type="nchar" MaxLength="10" />
+          <Property Name="DATETIME_LOGIN" Type="datetime" />
+        </EntityType>
+        <EntityType Name="User_Authen">
+          <Key>
+            <PropertyRef Name="NO_ID" />
+          </Key>
+          <Property Name="NO_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_EMP" Type="nchar" MaxLength="10" />
+          <Property Name="PASSWORD_ENCRYPT" Type="nvarchar(max)" />
+          <Property Name="RESULT_KEY" Type="nvarchar(max)" />
+        </EntityType>
+        <Function Name="Insert_authen_User" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID_EMP" Type="nchar" Mode="In" />
+          <Parameter Name="PASSWORD_ENCRYPT" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="RESULT_KEY" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <Function Name="Insert_employee_info" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id_emp" Type="nchar" Mode="In" />
+          <Parameter Name="Firstname_emp" Type="nvarchar" Mode="In" />
+          <Parameter Name="Lastname_emp" Type="nvarchar" Mode="In" />
+          <Parameter Name="DOB" Type="datetime" Mode="In" />
+          <Parameter Name="Email" Type="nvarchar" Mode="In" />
+          <Parameter Name="Mobile_phone" Type="nchar" Mode="In" />
+          <Parameter Name="Position" Type="nvarchar" Mode="In" />
+          <Parameter Name="Section" Type="nvarchar" Mode="In" />
+          <Parameter Name="Effective_date" Type="datetime" Mode="In" />
+          <Parameter Name="Terminated_date" Type="datetime" Mode="In" />
+          <Parameter Name="Address_emp" Type="nvarchar" Mode="In" />
+          <Parameter Name="Path_image" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="Insert_leave_emp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id_emp" Type="nchar" Mode="In" />
+          <Parameter Name="Total_vacation" Type="float" Mode="In" />
+          <Parameter Name="Balance_vacation" Type="float" Mode="In" />
+          <Parameter Name="Total_sick" Type="float" Mode="In" />
+          <Parameter Name="Balance_sick" Type="float" Mode="In" />
+          <Parameter Name="Total_private_leave" Type="float" Mode="In" />
+          <Parameter Name="Balance_private_leave" Type="float" Mode="In" />
+        </Function>
+        <Function Name="Insert_login" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Login_id" Type="nchar" Mode="In" />
+          <Parameter Name="Id_emp" Type="nchar" Mode="In" />
+          <Parameter Name="Datetime_login" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="Insert_OT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OT_id" Type="nchar" Mode="In" />
+          <Parameter Name="Id_emp" Type="nchar" Mode="In" />
+          <Parameter Name="OT_time_from" Type="time" Mode="In" />
+          <Parameter Name="OT_time_to" Type="time" Mode="In" />
+          <Parameter Name="Date_OT" Type="date" Mode="In" />
+        </Function>
+        <Function Name="Insert_scanin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Logtime_id" Type="nchar" Mode="In" />
+          <Parameter Name="Id_emp" Type="nchar" Mode="In" />
+          <Parameter Name="Time_scanin" Type="time" Mode="In" />
+          <Parameter Name="Date_scan" Type="date" Mode="In" />
+        </Function>
+        <Function Name="Insert_scanout" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Logtime_id" Type="nchar" Mode="In" />
+          <Parameter Name="Id_emp" Type="nchar" Mode="In" />
+          <Parameter Name="Time_scanout" Type="time" Mode="In" />
+          <Parameter Name="Date_scan" Type="date" Mode="In" />
+        </Function>
+        <Function Name="Update_leave_emp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id_emp" Type="nchar" Mode="In" />
+          <Parameter Name="Balance_vacation" Type="float" Mode="In" />
+          <Parameter Name="Balance_sick" Type="float" Mode="In" />
+          <Parameter Name="Balance_private_leave" Type="float" Mode="In" />
+        </Function>
+        <Function Name="View_EmpInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id_emp" Type="nchar" Mode="In" />
+          <Parameter Name="Firstname_emp" Type="nvarchar" Mode="In" />
+          <Parameter Name="Lastname_emp" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="View_leave_emp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id_emp" Type="nchar" Mode="In" />
+        </Function>
+        <Function Name="View_leaveInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id_emp" Type="nchar" Mode="In" />
+        </Function>
+        <Function Name="View_OT_emp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id_emp" Type="nchar" Mode="In" />
+        </Function>
+        <Function Name="View_timesheet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id_emp" Type="nchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="Time_Attendance_ModelStoreContainer">
+          <EntitySet Name="Employee_info" EntityType="Self.Employee_info" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Holiday_emp" EntityType="Self.Holiday_emp" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Leave_employee" EntityType="Self.Leave_employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OT_EMP" EntityType="Self.OT_EMP" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Timesheet_emp" EntityType="Self.Timesheet_emp" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Transac_login" EntityType="Self.Transac_login" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User_Authen" EntityType="Self.User_Authen" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Time_Attendance_Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Employee_info">
+          <Key>
+            <PropertyRef Name="ID_EMP" />
+          </Key>
+          <Property Name="ID_EMP" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" Type="String" />
+          <Property Name="FIRSTNAME_EMP" MaxLength="50" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="LASTNAME_EMP" MaxLength="50" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="DOB" Precision="0" Type="DateTime" />
+          <Property Name="EMAIL" MaxLength="50" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="MOBILE_PHONE" MaxLength="15" FixedLength="true" Unicode="true" Type="String" />
+          <Property Name="POSITION" MaxLength="50" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="SECTION" MaxLength="50" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="EFFECTIVE_DATE" Precision="0" Type="DateTime" />
+          <Property Name="TERMINATED_DATE" Precision="0" Type="DateTime" />
+          <Property Name="ADDRESS_EMP" MaxLength="50" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="path_image" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Holiday_emp">
+          <Key>
+            <PropertyRef Name="HOLIDAY_ID" />
+          </Key>
+          <Property Name="HOLIDAY_ID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="ID_EMP" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="FROMDATE" Type="DateTime" Precision="3" />
+          <Property Name="TODATE" Type="DateTime" Precision="3" />
+          <Property Name="MODE_HOLIDAY" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="TYPE_HOLIDAY" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="REQUEST_DATE" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Leave_employee">
+          <Key>
+            <PropertyRef Name="ID_EMP" />
+          </Key>
+          <Property Name="ID_EMP" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="TOTAL_VACATION" Type="Double" />
+          <Property Name="BALANCE_VACATION" Type="Double" />
+          <Property Name="TOTAL_SICK" Type="Double" />
+          <Property Name="BALANCE_SICK" Type="Double" />
+          <Property Name="TOTAL_PRIVATE_LEAVE" Type="Double" />
+          <Property Name="BALANCE_PRIVATE_LEAVE" Type="Double" />
+        </EntityType>
+        <EntityType Name="OT_EMP">
+          <Key>
+            <PropertyRef Name="OT_ID" />
+          </Key>
+          <Property Name="OT_ID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="ID_EMP" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="OT_TIME_FROM" Type="Time" Precision="7" />
+          <Property Name="OT_TIME_TO" Type="Time" Precision="7" />
+          <Property Name="DATE_OT" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="Timesheet_emp">
+          <Key>
+            <PropertyRef Name="LOGTIME_ID" />
+          </Key>
+          <Property Name="LOGTIME_ID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="ID_EMP" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="TIME_SCAN_IN" Type="Time" Precision="7" />
+          <Property Name="TIME_SCAN_OUT" Type="Time" Precision="7" />
+          <Property Name="DATE_SCAN" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="Transac_login">
+          <Key>
+            <PropertyRef Name="LOG_IN_ID" />
+          </Key>
+          <Property Name="LOG_IN_ID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="ID_EMP" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="DATETIME_LOGIN" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="User_Authen">
+          <Key>
+            <PropertyRef Name="NO_ID" />
+          </Key>
+          <Property Name="NO_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_EMP" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="PASSWORD_ENCRYPT" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RESULT_KEY" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityContainer Name="Time_AttendanceEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Employee_info" EntityType="Self.Employee_info" />
+          <EntitySet Name="Holiday_emp" EntityType="Self.Holiday_emp" />
+          <EntitySet Name="Leave_employee" EntityType="Self.Leave_employee" />
+          <EntitySet Name="OT_EMP" EntityType="Self.OT_EMP" />
+          <EntitySet Name="Timesheet_emp" EntityType="Self.Timesheet_emp" />
+          <EntitySet Name="Transac_login" EntityType="Self.Transac_login" />
+          <EntitySet Name="User_Authen" EntityType="Self.User_Authen" />
+          <FunctionImport Name="Insert_employee_info">
+            <Parameter Name="Id_emp" Mode="In" Type="String" />
+            <Parameter Name="Firstname_emp" Mode="In" Type="String" />
+            <Parameter Name="Lastname_emp" Mode="In" Type="String" />
+            <Parameter Name="DOB" Mode="In" Type="DateTime" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="Mobile_phone" Mode="In" Type="String" />
+            <Parameter Name="Position" Mode="In" Type="String" />
+            <Parameter Name="Section" Mode="In" Type="String" />
+            <Parameter Name="Effective_date" Mode="In" Type="DateTime" />
+            <Parameter Name="Terminated_date" Mode="In" Type="DateTime" />
+            <Parameter Name="Address_emp" Mode="In" Type="String" />
+            <Parameter Name="Path_image" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Insert_leave_emp">
+            <Parameter Name="Id_emp" Mode="In" Type="String" />
+            <Parameter Name="Total_vacation" Mode="In" Type="Double" />
+            <Parameter Name="Balance_vacation" Mode="In" Type="Double" />
+            <Parameter Name="Total_sick" Mode="In" Type="Double" />
+            <Parameter Name="Balance_sick" Mode="In" Type="Double" />
+            <Parameter Name="Total_private_leave" Mode="In" Type="Double" />
+            <Parameter Name="Balance_private_leave" Mode="In" Type="Double" />
+          </FunctionImport>
+          <FunctionImport Name="Insert_login">
+            <Parameter Name="Login_id" Mode="In" Type="String" />
+            <Parameter Name="Id_emp" Mode="In" Type="String" />
+            <Parameter Name="Datetime_login" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="Insert_OT">
+            <Parameter Name="OT_id" Mode="In" Type="String" />
+            <Parameter Name="Id_emp" Mode="In" Type="String" />
+            <Parameter Name="OT_time_from" Mode="In" Type="Time" />
+            <Parameter Name="OT_time_to" Mode="In" Type="Time" />
+            <Parameter Name="Date_OT" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="Insert_scanin">
+            <Parameter Name="Logtime_id" Mode="In" Type="String" />
+            <Parameter Name="Id_emp" Mode="In" Type="String" />
+            <Parameter Name="Time_scanin" Mode="In" Type="Time" />
+            <Parameter Name="Date_scan" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="Insert_scanout">
+            <Parameter Name="Logtime_id" Mode="In" Type="String" />
+            <Parameter Name="Id_emp" Mode="In" Type="String" />
+            <Parameter Name="Time_scanout" Mode="In" Type="Time" />
+            <Parameter Name="Date_scan" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="Update_leave_emp">
+            <Parameter Name="Id_emp" Mode="In" Type="String" />
+            <Parameter Name="Balance_vacation" Mode="In" Type="Double" />
+            <Parameter Name="Balance_sick" Mode="In" Type="Double" />
+            <Parameter Name="Balance_private_leave" Mode="In" Type="Double" />
+          </FunctionImport>
+          <FunctionImport Name="View_EmpInfo" ReturnType="Collection(Time_Attendance_Model.View_EmpInfo_Result1)">
+            <Parameter Name="Id_emp" Mode="In" Type="String" />
+            <Parameter Name="Firstname_emp" Mode="In" Type="String" />
+            <Parameter Name="Lastname_emp" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="View_leave_emp" ReturnType="Collection(Time_Attendance_Model.View_leave_emp_Result)">
+          <Parameter Name="Id_emp" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="View_leaveInfo" ReturnType="Collection(Time_Attendance_Model.View_leaveInfo_Result)">
+          <Parameter Name="Id_emp" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="View_OT_emp" ReturnType="Collection(Time_Attendance_Model.View_OT_emp_Result)">
+          <Parameter Name="Id_emp" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="View_timesheet" ReturnType="Collection(Time_Attendance_Model.View_timesheet_Result)">
+          <Parameter Name="Id_emp" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Insert_authen_User">
+            <Parameter Name="ID_EMP" Mode="In" Type="String" />
+            <Parameter Name="PASSWORD_ENCRYPT" Mode="In" Type="String" />
+            <Parameter Name="RESULT_KEY" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="View_EmpInfo_Result">
+          <Property Type="String" Name="ID_EMP" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="FIRSTNAME_EMP" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="LASTNAME_EMP" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="DOB" Nullable="true" Precision="23" />
+          <Property Type="String" Name="EMAIL" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="MOBILE_PHONE" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="POSITION" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="SECTION" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="EFFECTIVE_DATE" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="TERMINATED_DATE" Nullable="true" Precision="23" />
+          <Property Type="String" Name="ADDRESS_EMP" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="View_leave_emp_Result">
+          <Property Type="String" Name="HOLIDAY_ID" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="ID_EMP" Nullable="true" MaxLength="10" />
+          <Property Type="DateTime" Name="FROMDATE" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="TODATE" Nullable="true" Precision="23" />
+          <Property Type="String" Name="MODE_HOLIDAY" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="TYPE_HOLIDAY" Nullable="true" MaxLength="25" />
+          <Property Type="DateTime" Name="REQUEST_DATE" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="View_leaveInfo_Result">
+          <Property Type="String" Name="ID_EMP" Nullable="false" MaxLength="10" />
+          <Property Type="Double" Name="TOTAL_VACATION" Nullable="true" />
+          <Property Type="Double" Name="BALANCE_VACATION" Nullable="true" />
+          <Property Type="Double" Name="TOTAL_SICK" Nullable="true" />
+          <Property Type="Double" Name="BALANCE_SICK" Nullable="true" />
+          <Property Type="Double" Name="TOTAL_PRIVATE_LEAVE" Nullable="true" />
+          <Property Type="Double" Name="BALANCE_PRIVATE_LEAVE" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="View_OT_emp_Result">
+          <Property Type="String" Name="OT_ID" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="ID_EMP" Nullable="true" MaxLength="10" />
+          <Property Type="Time" Name="OT_TIME_FROM" Nullable="true" />
+          <Property Type="Time" Name="OT_TIME_TO" Nullable="true" />
+          <Property Type="DateTime" Name="DATE_OT" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="View_timesheet_Result">
+          <Property Type="String" Name="LOGTIME_ID" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="ID_EMP" Nullable="true" MaxLength="10" />
+          <Property Type="Time" Name="TIME_SCAN_IN" Nullable="true" />
+          <Property Type="Time" Name="TIME_SCAN_OUT" Nullable="true" />
+          <Property Type="DateTime" Name="DATE_SCAN" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="View_EmpInfo_Result1">
+          <Property Type="String" Name="ID_EMP" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="FIRSTNAME_EMP" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="LASTNAME_EMP" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="DOB" Nullable="true" Precision="23" />
+          <Property Type="String" Name="EMAIL" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="MOBILE_PHONE" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="POSITION" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="SECTION" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="EFFECTIVE_DATE" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="TERMINATED_DATE" Nullable="true" Precision="23" />
+          <Property Type="String" Name="ADDRESS_EMP" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="ComplexType1" />
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Time_Attendance_ModelStoreContainer" CdmEntityContainer="Time_AttendanceEntities">
+          <EntitySetMapping Name="Employee_info">
+            <EntityTypeMapping TypeName="Time_Attendance_Model.Employee_info">
+              <MappingFragment StoreEntitySet="Employee_info">
+                <ScalarProperty Name="path_image" ColumnName="path_image" />
+                <ScalarProperty Name="ID_EMP" ColumnName="ID_EMP" />
+                <ScalarProperty Name="FIRSTNAME_EMP" ColumnName="FIRSTNAME_EMP" />
+                <ScalarProperty Name="LASTNAME_EMP" ColumnName="LASTNAME_EMP" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+                <ScalarProperty Name="MOBILE_PHONE" ColumnName="MOBILE_PHONE" />
+                <ScalarProperty Name="POSITION" ColumnName="POSITION" />
+                <ScalarProperty Name="SECTION" ColumnName="SECTION" />
+                <ScalarProperty Name="EFFECTIVE_DATE" ColumnName="EFFECTIVE_DATE" />
+                <ScalarProperty Name="TERMINATED_DATE" ColumnName="TERMINATED_DATE" />
+                <ScalarProperty Name="ADDRESS_EMP" ColumnName="ADDRESS_EMP" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Leave_employee">
+            <EntityTypeMapping TypeName="Time_Attendance_Model.Leave_employee">
+              <MappingFragment StoreEntitySet="Leave_employee">
+                <ScalarProperty Name="ID_EMP" ColumnName="ID_EMP" />
+                <ScalarProperty Name="TOTAL_VACATION" ColumnName="TOTAL_VACATION" />
+                <ScalarProperty Name="BALANCE_VACATION" ColumnName="BALANCE_VACATION" />
+                <ScalarProperty Name="TOTAL_SICK" ColumnName="TOTAL_SICK" />
+                <ScalarProperty Name="BALANCE_SICK" ColumnName="BALANCE_SICK" />
+                <ScalarProperty Name="TOTAL_PRIVATE_LEAVE" ColumnName="TOTAL_PRIVATE_LEAVE" />
+                <ScalarProperty Name="BALANCE_PRIVATE_LEAVE" ColumnName="BALANCE_PRIVATE_LEAVE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OT_EMP">
+            <EntityTypeMapping TypeName="Time_Attendance_Model.OT_EMP">
+              <MappingFragment StoreEntitySet="OT_EMP">
+                <ScalarProperty Name="OT_ID" ColumnName="OT_ID" />
+                <ScalarProperty Name="ID_EMP" ColumnName="ID_EMP" />
+                <ScalarProperty Name="OT_TIME_FROM" ColumnName="OT_TIME_FROM" />
+                <ScalarProperty Name="OT_TIME_TO" ColumnName="OT_TIME_TO" />
+                <ScalarProperty Name="DATE_OT" ColumnName="DATE_OT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Timesheet_emp">
+            <EntityTypeMapping TypeName="Time_Attendance_Model.Timesheet_emp">
+              <MappingFragment StoreEntitySet="Timesheet_emp">
+                <ScalarProperty Name="LOGTIME_ID" ColumnName="LOGTIME_ID" />
+                <ScalarProperty Name="ID_EMP" ColumnName="ID_EMP" />
+                <ScalarProperty Name="TIME_SCAN_IN" ColumnName="TIME_SCAN_IN" />
+                <ScalarProperty Name="TIME_SCAN_OUT" ColumnName="TIME_SCAN_OUT" />
+                <ScalarProperty Name="DATE_SCAN" ColumnName="DATE_SCAN" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Transac_login">
+            <EntityTypeMapping TypeName="Time_Attendance_Model.Transac_login">
+              <MappingFragment StoreEntitySet="Transac_login">
+                <ScalarProperty Name="LOG_IN_ID" ColumnName="LOG_IN_ID" />
+                <ScalarProperty Name="ID_EMP" ColumnName="ID_EMP" />
+                <ScalarProperty Name="DATETIME_LOGIN" ColumnName="DATETIME_LOGIN" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User_Authen">
+            <EntityTypeMapping TypeName="Time_Attendance_Model.User_Authen">
+              <MappingFragment StoreEntitySet="User_Authen">
+                <ScalarProperty Name="RESULT_KEY" ColumnName="RESULT_KEY" />
+                <ScalarProperty Name="NO_ID" ColumnName="NO_ID" />
+                <ScalarProperty Name="ID_EMP" ColumnName="ID_EMP" />
+                <ScalarProperty Name="PASSWORD_ENCRYPT" ColumnName="PASSWORD_ENCRYPT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="Insert_employee_info" FunctionName="Time_Attendance_Model.Store.Insert_employee_info" />
+          <FunctionImportMapping FunctionImportName="Insert_leave_emp" FunctionName="Time_Attendance_Model.Store.Insert_leave_emp" />
+          <FunctionImportMapping FunctionImportName="Insert_login" FunctionName="Time_Attendance_Model.Store.Insert_login" />
+          <FunctionImportMapping FunctionImportName="Insert_OT" FunctionName="Time_Attendance_Model.Store.Insert_OT" />
+          <FunctionImportMapping FunctionImportName="Insert_scanin" FunctionName="Time_Attendance_Model.Store.Insert_scanin" />
+          <FunctionImportMapping FunctionImportName="Insert_scanout" FunctionName="Time_Attendance_Model.Store.Insert_scanout" />
+          <FunctionImportMapping FunctionImportName="Update_leave_emp" FunctionName="Time_Attendance_Model.Store.Update_leave_emp" />
+          <FunctionImportMapping FunctionImportName="View_EmpInfo" FunctionName="Time_Attendance_Model.Store.View_EmpInfo">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Time_Attendance_Model.View_EmpInfo_Result1">
+                <ScalarProperty Name="ID_EMP" ColumnName="ID_EMP" />
+                <ScalarProperty Name="FIRSTNAME_EMP" ColumnName="FIRSTNAME_EMP" />
+                <ScalarProperty Name="LASTNAME_EMP" ColumnName="LASTNAME_EMP" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+                <ScalarProperty Name="MOBILE_PHONE" ColumnName="MOBILE_PHONE" />
+                <ScalarProperty Name="POSITION" ColumnName="POSITION" />
+                <ScalarProperty Name="SECTION" ColumnName="SECTION" />
+                <ScalarProperty Name="EFFECTIVE_DATE" ColumnName="EFFECTIVE_DATE" />
+                <ScalarProperty Name="TERMINATED_DATE" ColumnName="TERMINATED_DATE" />
+                <ScalarProperty Name="ADDRESS_EMP" ColumnName="ADDRESS_EMP" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="View_leave_emp" FunctionName="Time_Attendance_Model.Store.View_leave_emp">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Time_Attendance_Model.View_leave_emp_Result">
+                <ScalarProperty Name="HOLIDAY_ID" ColumnName="HOLIDAY_ID" />
+                <ScalarProperty Name="ID_EMP" ColumnName="ID_EMP" />
+                <ScalarProperty Name="FROMDATE" ColumnName="FROMDATE" />
+                <ScalarProperty Name="TODATE" ColumnName="TODATE" />
+                <ScalarProperty Name="MODE_HOLIDAY" ColumnName="MODE_HOLIDAY" />
+                <ScalarProperty Name="TYPE_HOLIDAY" ColumnName="TYPE_HOLIDAY" />
+                <ScalarProperty Name="REQUEST_DATE" ColumnName="REQUEST_DATE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="View_leaveInfo" FunctionName="Time_Attendance_Model.Store.View_leaveInfo">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Time_Attendance_Model.View_leaveInfo_Result">
+                <ScalarProperty Name="ID_EMP" ColumnName="ID_EMP" />
+                <ScalarProperty Name="TOTAL_VACATION" ColumnName="TOTAL_VACATION" />
+                <ScalarProperty Name="BALANCE_VACATION" ColumnName="BALANCE_VACATION" />
+                <ScalarProperty Name="TOTAL_SICK" ColumnName="TOTAL_SICK" />
+                <ScalarProperty Name="BALANCE_SICK" ColumnName="BALANCE_SICK" />
+                <ScalarProperty Name="TOTAL_PRIVATE_LEAVE" ColumnName="TOTAL_PRIVATE_LEAVE" />
+                <ScalarProperty Name="BALANCE_PRIVATE_LEAVE" ColumnName="BALANCE_PRIVATE_LEAVE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="View_OT_emp" FunctionName="Time_Attendance_Model.Store.View_OT_emp">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Time_Attendance_Model.View_OT_emp_Result">
+                <ScalarProperty Name="OT_ID" ColumnName="OT_ID" />
+                <ScalarProperty Name="ID_EMP" ColumnName="ID_EMP" />
+                <ScalarProperty Name="OT_TIME_FROM" ColumnName="OT_TIME_FROM" />
+                <ScalarProperty Name="OT_TIME_TO" ColumnName="OT_TIME_TO" />
+                <ScalarProperty Name="DATE_OT" ColumnName="DATE_OT" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="View_timesheet" FunctionName="Time_Attendance_Model.Store.View_timesheet">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Time_Attendance_Model.View_timesheet_Result">
+                <ScalarProperty Name="LOGTIME_ID" ColumnName="LOGTIME_ID" />
+                <ScalarProperty Name="ID_EMP" ColumnName="ID_EMP" />
+                <ScalarProperty Name="TIME_SCAN_IN" ColumnName="TIME_SCAN_IN" />
+                <ScalarProperty Name="TIME_SCAN_OUT" ColumnName="TIME_SCAN_OUT" />
+                <ScalarProperty Name="DATE_SCAN" ColumnName="DATE_SCAN" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="Holiday_emp">
+            <EntityTypeMapping TypeName="IsTypeOf(Time_Attendance_Model.Holiday_emp)">
+              <MappingFragment StoreEntitySet="Holiday_emp">
+                <ScalarProperty Name="REQUEST_DATE" ColumnName="REQUEST_DATE" />
+                <ScalarProperty Name="TYPE_HOLIDAY" ColumnName="TYPE_HOLIDAY" />
+                <ScalarProperty Name="MODE_HOLIDAY" ColumnName="MODE_HOLIDAY" />
+                <ScalarProperty Name="TODATE" ColumnName="TODATE" />
+                <ScalarProperty Name="FROMDATE" ColumnName="FROMDATE" />
+                <ScalarProperty Name="ID_EMP" ColumnName="ID_EMP" />
+                <ScalarProperty Name="HOLIDAY_ID" ColumnName="HOLIDAY_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="Insert_authen_User" FunctionName="Time_Attendance_Model.Store.Insert_authen_User" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
